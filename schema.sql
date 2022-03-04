@@ -5,51 +5,39 @@ CREATE DATABASE reviews;
 \c reviews;
 
 CREATE TABLE reviews (
-  review_id SERIAL,
-  product_id SERIAL UNIQUE,
-  rating int,
-  summary text,
-  recommend boolean,
-  response text,
-  body text,
-  "date" timestamp,
-  reviewer_name text,
-  reviewer_email text,
-  helpfulness int,
-  photos json,
-  PRIMARY KEY (review_id)
-);
-
-CREATE TABLE ratings (
-  ratings_id SERIAL,
-  "1" int,
-  "2" int,
-  "3" int,
-  "4" int,
-  "5" int,
-  PRIMARY KEY (ratings_id)
-);
-
-CREATE TABLE recommended (
-  recommended_id SERIAL,
-  "true" int,
-  "false" int,
-  PRIMARY KEY (recommended_id)
+ id BIGSERIAL PRIMARY KEY,
+ product_id SERIAL,
+ rating INTEGER,
+ date BIGINT,
+ summary TEXT,
+ body TEXT,
+ recommend BOOLEAN,
+ reported BOOLEAN,
+ reviewer_name TEXT,
+ reviewer_email TEXT,
+ response TEXT,
+ helpfulness INTEGER
 );
 
 CREATE TABLE characteristics (
-  characteristics_id SERIAL,
-  characteristics json,
-  PRIMARY KEY (characteristics_id)
+ id BIGSERIAL PRIMARY KEY,
+ product_id SERIAL,
+ name TEXT
 );
 
-CREATE TABLE meta (
-  product_id SERIAL,
-  ratings_id SERIAL,
-  recommended_id SERIAL,
-  characteristics_id SERIAL,
-  FOREIGN KEY (product_id) REFERENCES reviews(product_id),
-  FOREIGN KEY (ratings_id) REFERENCES ratings(ratings_id),
-  FOREIGN KEY (recommended_id) REFERENCES recommended(recommended_id),
-  FOREIGN KEY (characteristics_id) REFERENCES characteristics(characteristics_id)
+CREATE TABLE characteristic_reviews (
+ id BIGSERIAL PRIMARY KEY,
+ characteristic_id INTEGER,
+ review_id SERIAL,
+ value INTEGER
 );
+
+CREATE TABLE reviews_photos (
+ id BIGSERIAL PRIMARY KEY,
+ review_id INTEGER,
+ url TEXT
+);
+
+ALTER TABLE characteristic_reviews ADD CONSTRAINT characteristic_reviews_characteristic_id_fkey FOREIGN KEY (characteristic_id) REFERENCES characteristics(id);
+ALTER TABLE characteristic_reviews ADD CONSTRAINT characteristic_reviews_review_id_fkey FOREIGN KEY (review_id) REFERENCES reviews(id);
+ALTER TABLE reviews_photos ADD CONSTRAINT reviews_photos_review_id_fkey FOREIGN KEY (review_id) REFERENCES reviews(id);

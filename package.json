@@ -1,0 +1,29 @@
+{
+  "name": "sdc-reviews",
+  "version": "1.0.0",
+  "description": "Reviews API for SDC",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RFP-58-DK/SDC-Reviews.git"
+  },
+  "author": "Skip Harris",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RFP-58-DK/SDC-Reviews/issues"
+  },
+  "homepage": "https://github.com/RFP-58-DK/SDC-Reviews#readme",
+  "devDependencies": {
+    "webpack": "^5.70.0"
+  },
+  "dependencies": {
+    "axios": "^0.26.0",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15",
+    "postgres": "^1.0.2"
+  }
+}

@@ -1,0 +1,32 @@
+3/4/2022 (raw)
+reviews=# explain analyze SELECT * FROM reviews;
+                                                      QUERY PLAN
+-----------------------------------------------------------------------------------------------------------------------
+ Seq Scan on reviews  (cost=0.00..315136.84 rows=5774984 width=324) (actual time=0.012..2771.428 rows=5774952 loops=1)
+ Planning Time: 0.061 ms
+ Execution Time: 3326.189 ms
+(3 rows)
+
+reviews=# explain analyze SELECT * FROM characteristics;
+                                                         QUERY PLAN
+----------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on characteristics  (cost=0.00..54204.79 rows=3347679 width=18) (actual time=0.096..689.152 rows=3347679 loops=1)
+ Planning Time: 0.086 ms
+ Execution Time: 940.534 ms
+(3 rows)
+
+reviews=# explain analyze SELECT * FROM characteristic_reviews;
+                                                              QUERY PLAN
+---------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on characteristic_reviews  (cost=0.00..316382.42 rows=19327642 width=20) (actual time=0.074..1912.053 rows=19327575 loops=1)
+ Planning Time: 0.098 ms
+ Execution Time: 2687.465 ms
+(3 rows)
+
+reviews=# explain analyze SELECT * FROM reviews_photos;
+                                                         QUERY PLAN
+----------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on reviews_photos  (cost=0.00..85699.41 rows=2742741 width=140) (actual time=0.082..402.426 rows=2742540 loops=1)
+ Planning Time: 0.072 ms
+ Execution Time: 515.502 ms
+(3 rows)

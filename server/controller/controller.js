@@ -6,7 +6,13 @@ const getReviews = (req, res) => {
     if (err) {
       res.status(500).send(err);
     } else {
-      res.status(200).send(reviews);
+      const response = {
+        product: params.product_id,
+        page: params.page || 0,
+        count: params.count || 5,
+        results: reviews
+      }
+      res.status(200).send(response);
     }
   })
 };

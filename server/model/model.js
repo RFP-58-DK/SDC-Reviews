@@ -2,7 +2,25 @@ const axios = require('axios');
 const connection = require('../../db/connection.js')
 
 const getReviews = (params, callback) => {
-  let query = 'SELECT * FROM reviews LIMIT 5';
+  const query = `
+    SELECT
+      r.id AS review_id,
+      r.rating,
+      r.summary,
+      r.recommend,
+      r.response,
+      r.body,
+      r.date,
+      r.reviewer_name,
+      r.helpfulness,
+      json_build_object(
+        'id', p.id,
+        'url', p.url
+      ) AS photos
+    FROM reviews AS r LEFT JOIN reviews_photos AS p on r.id = p.review_id
+    WHERE product_id = ${params.product_id}
+    LIMIT ${params.count || 5}
+  `;
   connection.query(query, (err, res) => {
     if (err) {
       callback(err);
@@ -67,3 +85,14 @@ module.exports = {
   putReviewReport,
   postReviews*/
 }
+
+
+
+// JOIN (
+//   SELECT
+//     rev.id AS photos,
+//     array_agg(p.id, p.url) AS url_array
+//   FROM reviews_photos AS p
+//   JOIN reviews AS rev ON rev.id = p.review_id
+//   GROUP BY rev.id
+// ) p USING (id)

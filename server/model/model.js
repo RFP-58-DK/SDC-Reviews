@@ -13,13 +13,18 @@ const getReviews = (params, callback) => {
       r.date,
       r.reviewer_name,
       r.helpfulness,
-      json_build_object(
-        'id', p.id,
-        'url', p.url
+      json_agg(
+        json_build_object(
+          'id', p.id,
+          'url', p.url
+        )
       ) AS photos
-    FROM reviews AS r LEFT JOIN reviews_photos AS p on r.id = p.review_id
+    FROM reviews AS r
+    JOIN reviews_photos AS p
+    ON r.id = p.review_id
     WHERE product_id = ${params.product_id}
-    LIMIT ${params.count || 5}
+    GROUP BY r.id
+    LIMIT ${params.count || 5} OFFSET ${(params.page - 1) * params.count || 0}
   `;
   connection.query(query, (err, res) => {
     if (err) {
@@ -30,19 +35,51 @@ const getReviews = (params, callback) => {
   })
 };
 
-/*const getReviewsMeta = (params, callback) => {
-  const route = API + `reviews/meta`;
-  axios.get(route, {headers:
-    {authorization: TOKEN}, params: params})
-  .then((res) => {
-    callback(null, res.data)
-  })
-  .catch((err) => {
-    callback(err);
+const getReviewsRating = (params, callback) => {
+  const query = `
+  SELECT
+    r.product_id,
+    json_build_object(
+      r.rating,
+      count(
+        r.rating
+      )
+    ) AS ratings,
+    r.recommend
+  FROM reviews AS r
+  WHERE r.product_id = ${params.product_id}
+  GROUP BY r.product_id, r.rating, r.recommend;
+  `;
+  connection.query(query, (err, res) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, res.rows);
+    }
   })
 };
 
-const putReviewHelpful = (params, callback) => {
+const getReviewsCharacteristics = (params, callback) => {
+  const query = `
+  SELECT
+    c.*,
+    cr.review_id,
+    cr.value
+  FROM characteristics AS c
+  JOIN characteristic_reviews AS cr
+  ON c.id = cr.characteristic_id
+  WHERE c.product_id = ${params.product_id};
+  `;
+  connection.query(query, (err, res) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, res.rows);
+    }
+  })
+}
+
+/*const putReviewHelpful = (params, callback) => {
   const route = API + `reviews/${params.review_id}/helpful`;
   axios.put(route, null, {headers:
     {authorization: TOKEN}, params: params})
@@ -79,20 +116,10 @@ const postReviews = (params, callback) => {
 };*/
 
 module.exports = {
-  getReviews/*,
-  getReviewsMeta,
+  getReviews,
+  getReviewsRating,
+  getReviewsCharacteristics/*,
   putReviewHelpful,
   putReviewReport,
   postReviews*/
 }
-
-
-
-// JOIN (
-//   SELECT
-//     rev.id AS photos,
-//     array_agg(p.id, p.url) AS url_array
-//   FROM reviews_photos AS p
-//   JOIN reviews AS rev ON rev.id = p.review_id
-//   GROUP BY rev.id
-// ) p USING (id)

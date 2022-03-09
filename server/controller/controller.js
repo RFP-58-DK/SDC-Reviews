@@ -15,6 +15,7 @@ const getReviews = (req, res) => {
       for (let i = 0; i < response.results.length; i ++) {
         let d = new Date(parseInt(response.results[i].date));
         response.results[i].date = d;
+        response.results[i].review_id = parseInt(response.results[i].review_id);
       }
       res.status(200).send(response);
     }
@@ -27,8 +28,8 @@ const getReviewsMeta = (req, res) => {
     product_id: params.product_id,
     ratings: {},
     recommended: {
-      true: 0,
-      false: 0
+      false: 0,
+      true: 0
     },
     characteristics: {}
   };
@@ -48,6 +49,8 @@ const getReviewsMeta = (req, res) => {
           response.recommended.false++;
         }
       }
+      response.recommended.true = response.recommended.true.toString();
+      response.recommended.false = response.recommended.false.toString();
       Model.getReviewsCharacteristics(params, (err, characteristics) => {
         if (err) {
           res.status(500).send(err);

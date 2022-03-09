@@ -13,5 +13,5 @@ export const options = {
 }
 
 export default function () {
-  http.get('http://localhost:3000/reviews/meta?product_id=5');
+  http.get('http://localhost:3000/reviews/?product_id=2');
 }

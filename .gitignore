@@ -2,3 +2,6 @@
 /node_modules
 db/config.js
 query.sql
+readresults.txt
+db/etl.sql
+db/schema.sql

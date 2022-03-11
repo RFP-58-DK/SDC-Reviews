@@ -2,7 +2,7 @@ const { Pool, Client } = require('pg');
 const Config = require ('./config.js');
 
 const credentials = {
-  host: 'localhost',
+  host: Config.host,
   port: 5432,
   database: Config.database,
   user: Config.user,

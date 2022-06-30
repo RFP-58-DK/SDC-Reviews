@@ -79,47 +79,8 @@ const getReviewsCharacteristics = (params, callback) => {
   })
 }
 
-/*const putReviewHelpful = (params, callback) => {
-  const route = API + `reviews/${params.review_id}/helpful`;
-  axios.put(route, null, {headers:
-    {authorization: TOKEN}, params: params})
-  .then((res) => {
-    callback(null, res.data)
-  })
-  .catch((err) => {
-    callback(err);
-  })
-};
-
-const putReviewReport = (params, callback) => {
-  const route = API + `reviews/${params.review_id}/helpful`;
-  axios.put(route, null, {headers:
-    {authorization: TOKEN}, params: params})
-  .then((res) => {
-    callback(null, res.data)
-  })
-  .catch((err) => {
-    callback(err);
-  })
-};
-
-const postReviews = (params, callback) => {
-  const route = API + `reviews/`;
-  axios.post(route, params, {headers:
-    {authorization: TOKEN}})
-  .then((res) => {
-    callback(null, res.data)
-  })
-  .catch((err) => {
-    callback(err);
-  })
-};*/
-
 module.exports = {
   getReviews,
   getReviewsRating,
-  getReviewsCharacteristics/*,
-  putReviewHelpful,
-  putReviewReport,
-  postReviews*/
+  getReviewsCharacteristics
 }

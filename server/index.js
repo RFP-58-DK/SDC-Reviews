@@ -18,11 +18,3 @@ app.get('/reviews/', (req, res) => {
 app.get('/reviews/meta', (req, res) => {
   Controller.getReviewsMeta(req, res);
 });
-
-/*app.put('/reviews/:review_id/helpful', (req, res) => {
-  Controller.putReviewHelpful(req, res);
-});
-
-app.post('/reviews/', (req, res) => {
-  Controller.postReviews(req, res);
-});*/

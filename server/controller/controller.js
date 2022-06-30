@@ -79,31 +79,7 @@ const getReviewsMeta = (req, res) => {
   })
 };
 
-/*const putReviewHelpful = (req, res) => {
-  const params = req.body.params;
-  Model.putReviewHelpful(params, (err, reviews) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(204).send();
-    }
-  })
-}
-
-const postReviews = (req, res) => {
-  const params = req.body;
-  Model.postReviews(params, (err, reviews) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(201).send();
-    }
-  })
-}*/
-
 module.exports = {
   getReviews,
-  getReviewsMeta/*,
-  putReviewHelpful,
-  postReviews*/
+  getReviewsMeta
 }

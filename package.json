@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/RFP-58-DK/SDC-Reviews#readme",
   "devDependencies": {
-    "webpack": "^5.70.0",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
